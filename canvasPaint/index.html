@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvasPaint</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <canvas id="canvas" width="100" height="100"></canvas>
+    <script>
+        let canvas = document.getElementById("canvas")
+        // 通过id获取元素，使用 let 定义变量，这是最新用法，以前使用 var 定义
+        canvas.width = document.documentElement.clientWidth
+        canvas.height = document.documentElement.clientHeight
+        // 重新定义canvas宽高为 满视口
+        // 注意！！！这里是通过HTML来设置canvas宽高，如果使用CSS来设置宽高（比如canvas.style.width=...），那么就会和‘width="100" height="100"’冲突，出现bug
+        let painting = false
+        // 定义变量 painting，判断是否在屏幕上画线，默认为 false，不画线
+        let ctx = canvas.getContext("2d")
+        // 创建一个二维渲染上下文
+        ctx.fillStyle = "black"
+        // "填充"为黑色，“不影响边框”
+        ctx.strokeStyle = 'black'
+        // 描述 Canvas 2D API 画笔颜色或者样式的属性，“影响边框”
+        let w = 5
+        ctx.lineWidth = w
+        let last
+
+        let isTouchDevice = 'ontouchstart' in document.documentElement;
+
+        if (isTouchDevice) {
+            canvas.ontouchmove = (e) => {
+                console.log(e)
+                let x = e.touches[0].clientX
+                let y = e.touches[0].clientY
+                ctx.beginPath()
+                ctx.arc(x, y, w / 2, 0, 2 * Math.PI);
+                ctx.fill()
+                // 用fill填充圆点
+            }
+        } else {
+            canvas.onmousedown = (e) => {
+                console.log(e.clientX)
+                // “鼠标按下”事件
+                painting = true
+                // 按下则画线
+                ctx.beginPath()
+                ctx.arc(e.clientX, e.clientY, w / 2, 0, 2 * Math.PI);
+                ctx.fill()
+                last = [e.clientX, e.clientY]
+            }
+
+            canvas.onmousemove = (e) => {
+                // “鼠标移动”事件
+                if (painting === true) {// 以下为画线代码
+                    ctx.beginPath()
+                    ctx.moveTo(last[0], last[1])
+                    ctx.lineTo(e.clientX, e.clientY)
+                    ctx.stroke()
+                    // 用stroke画线
+                    ctx.beginPath()
+                    ctx.arc(e.clientX, e.clientY, w / 2, 0, 2 * Math.PI);
+                    ctx.fill()
+                    // 用fill填充圆点
+                    last[0] = e.clientX
+                    last[1] = e.clientY
+
+                } else {
+                    // console.log('什么都不做')
+                }
+            }
+
+            canvas.onmouseup = () => {
+                painting = false
+            }
+        }
+    </script>
+</body>
+
+</html>
