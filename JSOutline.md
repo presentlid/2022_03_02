@@ -1,3 +1,4 @@
+<!-- 03.08 -->
 # JS 概述
 * OS：Operating System 操作系统。
 * bash：是一种shell，ba指代人名。
@@ -22,3 +23,9 @@ JS在内存中运行。
 Stack栈顺序存储，Heap堆随机存储（为什么分这两个区？如果，随机存储的内容放到顺序存储中，那么当这个内容为对象时，对象增删会使得顺序存储空间完全乱套）。
 
 非对象都存储在Stack中，对象都存储在Heap中。
+
+## window
+
+<img src="images/i2.png" alt="Fig.2">
+
+注意，window变量和window对象的概念是不一样的。window变量存放了window对象的地址；window对象是Heap中的一堆数据。如果编写 var xxx = window，那么就可以直接使用xxx来调用window对象里的内容。
