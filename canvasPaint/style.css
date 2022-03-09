@@ -1,7 +1,11 @@
-* {
+body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* ------------------------- */
+    height: 100%; 
+    overflow: hidden; 
+    /* 这两句代码将禁止“在触屏情况下屏幕会被拖动”的情况 */
 }
 
 #canvas {

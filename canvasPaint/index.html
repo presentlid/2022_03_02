@@ -1,10 +1,12 @@
+<!-- 03.08：2h；03.09：1h -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0 user-scalable=no">
     <title>canvasPaint</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -32,20 +34,43 @@
 
         let isTouchDevice = 'ontouchstart' in document.documentElement;
 
-        if (isTouchDevice) {
-            canvas.ontouchmove = (e) => {
-                console.log(e)
-                let x = e.touches[0].clientX
-                let y = e.touches[0].clientY
+        if (isTouchDevice) {// 判断设备是 触屏 还是 鼠标点击
+            canvas.ontouchstart = (e) => {// "触屏按下"事件
+                // console.log(e)
+                painting = true
+                let X = e.touches[0].clientX
+                let Y = e.touches[0].clientY
+                // 注意！！！触屏有可能是“多指”触屏，所以触屏坐标保存在数组里，这里只考虑“单指操作”的情况
                 ctx.beginPath()
-                ctx.arc(x, y, w / 2, 0, 2 * Math.PI);
+                ctx.arc(X, Y, w / 2, 0, 2 * Math.PI);
                 ctx.fill()
-                // 用fill填充圆点
+                last = [X, Y]
+            }
+
+            canvas.ontouchmove = (e) => {// “触屏拖动”事件
+                if (painting === true) {// 以下为画线代码
+                    let X = e.touches[0].clientX
+                    let Y = e.touches[0].clientY
+                    ctx.beginPath()
+                    ctx.moveTo(last[0], last[1])
+                    ctx.lineTo(X, Y)
+                    ctx.stroke()
+                    // 用stroke画线
+                    ctx.beginPath()
+                    ctx.arc(X, Y, w / 2, 0, 2 * Math.PI);
+                    ctx.fill()
+                    // 用fill填充圆点
+                    last[0] = X
+                    last[1] = Y
+                }
+            }
+
+            canvas.ontouchend = (e) => {// “触屏结束”事件
+                painting = false
             }
         } else {
-            canvas.onmousedown = (e) => {
-                console.log(e.clientX)
-                // “鼠标按下”事件
+            canvas.onmousedown = (e) => {// “鼠标按下”事件
+                // console.log(e)
                 painting = true
                 // 按下则画线
                 ctx.beginPath()
@@ -54,8 +79,7 @@
                 last = [e.clientX, e.clientY]
             }
 
-            canvas.onmousemove = (e) => {
-                // “鼠标移动”事件
+            canvas.onmousemove = (e) => {// “鼠标移动”事件
                 if (painting === true) {// 以下为画线代码
                     ctx.beginPath()
                     ctx.moveTo(last[0], last[1])
@@ -68,13 +92,10 @@
                     // 用fill填充圆点
                     last[0] = e.clientX
                     last[1] = e.clientY
-
-                } else {
-                    // console.log('什么都不做')
                 }
             }
 
-            canvas.onmouseup = () => {
+            canvas.onmouseup = () => {// “鼠标结束”事件
                 painting = false
             }
         }
