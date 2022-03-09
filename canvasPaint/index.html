@@ -19,11 +19,9 @@
         canvas.width = document.documentElement.clientWidth
         canvas.height = document.documentElement.clientHeight
         // 重新定义canvas宽高为 满视口
-        // 注意！！！这里是通过HTML来设置canvas宽高，如果使用CSS来设置宽高（比如canvas.style.width=...），那么就会和‘width="100" height="100"’冲突，出现bug
+        // 注意！！！这里是通过HTML来设置canvas宽高，如果使用CSS来设置宽高（比如canvas.style.width=...），那么canvas会出现bug
         let painting = false
-        // 定义变量 painting，判断是否在屏幕上画线，默认为 false，不画线
         let ctx = canvas.getContext("2d")
-        // 创建一个二维渲染上下文
         ctx.fillStyle = "black"
         // "填充"为黑色，“不影响边框”
         ctx.strokeStyle = 'black'
@@ -34,9 +32,8 @@
 
         let isTouchDevice = 'ontouchstart' in document.documentElement;
 
-        if (isTouchDevice) {// 判断设备是 触屏 还是 鼠标点击
-            canvas.ontouchstart = (e) => {// "触屏按下"事件
-                // console.log(e)
+        if (isTouchDevice) {
+            canvas.ontouchstart = (e) => {
                 painting = true
                 let X = e.touches[0].clientX
                 let Y = e.touches[0].clientY
@@ -47,55 +44,51 @@
                 last = [X, Y]
             }
 
-            canvas.ontouchmove = (e) => {// “触屏拖动”事件
-                if (painting === true) {// 以下为画线代码
+            canvas.ontouchmove = (e) => {
+                if (painting === true) {
                     let X = e.touches[0].clientX
                     let Y = e.touches[0].clientY
                     ctx.beginPath()
                     ctx.moveTo(last[0], last[1])
                     ctx.lineTo(X, Y)
                     ctx.stroke()
-                    // 用stroke画线
+                    // 用stroke画线，这样lineWidth会生效
                     ctx.beginPath()
                     ctx.arc(X, Y, w / 2, 0, 2 * Math.PI);
                     ctx.fill()
-                    // 用fill填充圆点
+                    // 注意！！！只填充（fill）圆，不要加stroke，否则圆会在半径w/2的基础上再加上w/2的边框（lineWidth）
                     last[0] = X
                     last[1] = Y
                 }
             }
 
-            canvas.ontouchend = (e) => {// “触屏结束”事件
+            canvas.ontouchend = (e) => {
                 painting = false
             }
         } else {
-            canvas.onmousedown = (e) => {// “鼠标按下”事件
-                // console.log(e)
+            canvas.onmousedown = (e) => {
                 painting = true
-                // 按下则画线
                 ctx.beginPath()
                 ctx.arc(e.clientX, e.clientY, w / 2, 0, 2 * Math.PI);
                 ctx.fill()
                 last = [e.clientX, e.clientY]
             }
 
-            canvas.onmousemove = (e) => {// “鼠标移动”事件
-                if (painting === true) {// 以下为画线代码
+            canvas.onmousemove = (e) => {
+                if (painting === true) {
                     ctx.beginPath()
                     ctx.moveTo(last[0], last[1])
                     ctx.lineTo(e.clientX, e.clientY)
                     ctx.stroke()
-                    // 用stroke画线
                     ctx.beginPath()
                     ctx.arc(e.clientX, e.clientY, w / 2, 0, 2 * Math.PI);
                     ctx.fill()
-                    // 用fill填充圆点
                     last[0] = e.clientX
                     last[1] = e.clientY
                 }
             }
 
-            canvas.onmouseup = () => {// “鼠标结束”事件
+            canvas.onmouseup = () => {
                 painting = false
             }
         }
