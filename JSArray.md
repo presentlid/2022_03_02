@@ -59,7 +59,7 @@ JS的伪数组中，有 '0': xxx, '1': yyy, '2': zzz ..., length: x 这些元素
 ## 查看元素
 查看数组时，要留意有没有数组越界，即索引不存在：下标为复制，或者下标值超过了数组的长度。
 
-一、遍历
+1. 遍历
 
 ``` JavaScript
     for (let i = 0; i < arr.length; i++) {
@@ -84,11 +84,63 @@ JS的伪数组中，有 '0': xxx, '1': yyy, '2': zzz ..., length: x 这些元素
 
 <strong>注意：使用 for 遍历数组时不要用 in 关键字（如 for(let i in arr)），这个关键字是遍历普通对象时使用的，遍历数组使用 in 关键字有可能会出现奇怪现象。</strong>
 
-上述中，对数组的遍历有 for 和 forEach 两种方式，它们的区别：
-* for 在块内能写 break 或者 continue 来影响循环；而 forEach 函数则不行，它一旦开始就必须遍历所有元素。
+上述中，对数组的遍历有 for 和 forEach 两种方式，它们的区别：for 在块内能写 break 或者 continue 来影响循环；而 forEach 函数则不行，它一旦开始就必须遍历所有元素。
 
-二、单个查看
+1. 单个查看
 ``` JavaScript
     arr[0]
     arr['0']
 ```
+
+## 增加元素
+``` JavaScript
+    arr.push('x','y','z')
+    // 在 arr 末尾添加元素，返回新长度。
+    arr.unshift('a','b','c')
+    // 在 arr 首位添加元素，返回新长度。
+    arr.splice(index, num, element)
+    // 在 arr 索引为 index 处删除num个元素（num=0时则不删元素），再添加元素内容 element 到数组 arr 中。
+```
+
+## 修改元素
+``` JavaScript
+    arr.splice(index, num, element)
+    // 在 arr 索引为 index 处删除num个元素（num=0时则不删元素），再添加元素内容 element 到数组 arr 中。
+    arr.reverse() 
+    // 数组倒序
+    arr.sort((a,b)=> a-b)
+    // 数组升序排序，当元素内容为对象时，则 a-b 要具体说明到底是对象中哪个属性做减法。
+```
+
+## 数组变换
+``` JavaScript
+    let arr =[1,2,3,4,5,6] // n 个元素的数组 arr
+
+    arr.map(item=>item*item)
+    // n 变 n
+    arr.filter(item=>item%2===0)
+    // n 变少，当返回值为真时则要，否则不要
+    arr.reduce((sum,item)=>sum+item, 0)
+    // n 变 1
+```
+
+reduce 是一个非常强大的函数，它能实现 map 和 filter 函数。
+``` JavaScript
+    let arr =[1,2,3,4,5,6] // n 个元素的数组 arr
+    
+    arr.map(item=>item*item)
+    arr.reduce((res, e)=>res.concat(e*e), [])
+    // 上述两个语句等价
+    
+    arr.filter(item=>item%2===0)
+    arr.reduce((res, e)=>res.concat(e%2===0?e:[]),[])
+    // 上述两个语句等价
+```
+
+## reduce 面试题
+
+<img src="images/i5.jpg" alt="Fig.1">
+
+参考答案：
+
+<img src="images/i6.jpg" alt="Fig.2">
