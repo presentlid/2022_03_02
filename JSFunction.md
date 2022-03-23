@@ -83,6 +83,18 @@
         }, 0);
     }
     // 打印：6 6 6 6 6 6
+    // 个人认为：如果 setTimeout 里的变量(如变量 i)在 setTimeout 函数所在代码块以外定义，那么就会出现以上“for循环代码块循环结束后 setTimeout 才执行，i = 6，所以结果为 6 个 6”的情况。
+
+    let i = 0;
+    for (i = -1; i < 5; i++) {
+        let j = i;
+        setTimeout(()=>{
+            console.log(j);
+        }, 0);
+        j++; // 这句代码凸显 setTimeout 的执行时间。
+    }
+    // 打印：0 1 2 3 4 5
+    // 此时 setTimeout 里的变量 j 在 for循环里，每循环一次，变量 j 就会被释放掉，因此 setTimeout 在每次循环结束时都要赶紧打印变量 j。
 
     for (let i = 0; i < 6; i++) {
         setTimeout(()=>{
@@ -90,6 +102,7 @@
         }, 0);
     }
     // 打印：0 1 2 3 4 5
+    // 常见的 let for循环也是打印 0 1 2 3 4 5。
 ```
 
 ### 作用域 <a id = 2></a>
