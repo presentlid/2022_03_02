@@ -260,7 +260,7 @@ JS 常用的 this 写法：
 ```
 上述代码中，其实 person.sayHi() 自动将 person 传给 sayHi，这样 sayHi 就可以通过 this 引用 person。
 
-由于大师写法语义清晰，所以在调用函数时</strong>一定要用大师写法，一定要用大师写法，一定要用大师写法，</strong>因为小白写法你已经会了。
+由于大师写法语义清晰，所以在调用函数时<strong>一定要用大师写法，一定要用大师写法，一定要用大师写法，</strong>因为小白写法你已经会了。
 
 在大师写法中，如果不用 this，但又要给 arguments 值，那么就把 undefined 或者 null 给 this 即可：...cal(undefined, 参数1, 参数2, ...)。
 
