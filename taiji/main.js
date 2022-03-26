@@ -50,13 +50,12 @@ let text1 = '';
 
 let div1 = document.querySelector('#div1');
 let css = document.querySelector('#css');
-let isTouchDevice = 'ontouchstart' in document.documentElement;
 
 let n = 1;
 let printFn = function () {
     setTimeout(() => {
         if (text[n - 1] === '\n') text1 += '<br>';
-        else if (text[n-1] === ' ') text1 += '&nbsp;';
+        else if (text[n - 1] === ' ') text1 += '&nbsp;';
         else text1 += text[n - 1];
         css.innerHTML = text.substring(0, n);
         div1.innerHTML = text1;

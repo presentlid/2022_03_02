@@ -1,4 +1,5 @@
 <!-- 03.26: 1.5h 03.26: 5.5h -->
+<!-- 视频用的是 parcel 来打开网页，我安装了好久，老是说我没有安装 VS，但是安装 VS 又得占用点 C 盘内存。干脆用回 http-server -c-1，又不慢。 -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 
@@ -13,8 +14,10 @@
 
 <body>
     <!-- http://js.jirengu.com/tuzojujoha/1/edit -->
+    <!-- css gradient background generator: https://cssgradient.io/ -->
     <div id="div1"></div>
     <div id='cycle'></div>
+    <!-- 在这里调试了很久，之前把 cycle 设置为 div1 的子元素，导致 JS 往 div1 里写内容时把 cycle 给覆盖了，所以只有文字而没有太极图。 -->
     <style id="css"></style>
     <script src="./main.js"></script>
 </body>
