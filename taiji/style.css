@@ -4,11 +4,6 @@
     box-sizing: border-box;
 }
 
-body {/* 这两句代码将禁止“在触屏情况下屏幕会被拖动”的情况 */
-    height: 100%;
-    overflow: hidden;
-}
-
 #div1 {
     word-break: break-all;
 }
