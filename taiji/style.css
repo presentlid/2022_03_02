@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {/* 这两句代码将禁止“在触屏情况下屏幕会被拖动”的情况 */
+    height: 100%;
+    overflow: hidden;
+}
+
+#div1 {
+    word-break: break-all;
+}
+
+#cycle {
+    display: block;
+    position: fixed;
+}
+
+#cycle::before {
+    content: '';
+    display: block;
+    position: absolute;
+    box-sizing: border-box;
+}
+
+#cycle::after {
+    content: '';
+    display: block;
+    position: absolute;
+    box-sizing: border-box;
+}
+
+@media (max-width: 500px) {
+    #div1 {
+        height: 50vh;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    #cycle {
+        position: relative;
+    }
+}
