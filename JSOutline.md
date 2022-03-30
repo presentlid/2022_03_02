@@ -36,4 +36,5 @@ JS对象都有个隐藏属性，这个隐藏属性指向的对象就是原型，
 * 所有对象都有隐藏属性"\_\_proto__"，指向原型，首字母大写的对象也有隐藏属性，暂不深究。
 * 原型作用：因为原型里封装了共同属性，所以能够节省代码，节省内存。
 * 原型也是对象，因此原型也有原型，window.Object.prototype指向的对象包含了所有对象的共有属性，它（原型）是<storng>对象的根</strong>，它的原型指向 null。
+* Window.\_\_proto__ = EventTarget, EventTarget.\_\_proto__ = Function.prototype
 
