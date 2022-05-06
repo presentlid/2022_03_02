@@ -308,3 +308,47 @@ JS 常用的 this 写法：
     // 匿名函数前面加个运算符，~、+、- 可以替代 !，或者用 () 把匿名函数括住也行。但相对来说 ! 是最安全的，其他方法或多或少会出现 bug。
 ```
 
+### call apply bind
+该部分内容<a href='https://segmentfault.com/a/1190000018270750'>参考另一位博主的内容</a>。
+
+三者都是用来改变函数this对象的指向。
+``` js
+    var obj = {
+        x: 81,
+    };
+    
+    var foo = {
+        getX: function() {
+            return this.x;
+        }
+    }
+    
+    console.log(foo.getX.bind(obj)());  //81
+    console.log(foo.getX.call(obj));    //81
+    console.log(foo.getX.apply(obj));   //81
+```
+bind和apply、call的区别：
+1. 从上述代码可以看到，bind后面接两个两个括号。
+2. 当你定义了函数，想指定函数this对象，又不想立即执行函数，而是回调时才执行该函数，那么就可以使用bind；apply、call则立即执行函数。
+``` js
+    var obj = {
+        x: 81,
+    };
+    
+    var foo = {
+        getX: function() {
+            return this.x;
+        }
+    }
+    var f1 = foo.getX.bind(obj);
+    console.log(f1());  //81
+```
+apply、call的区别：书写方式不一样。
+``` js
+    var func = function(arg1, arg2) {
+        // ...
+    };
+    func.call(this, arg1, arg2);
+    func.apply(this, [arg1, arg2]);
+```
+
